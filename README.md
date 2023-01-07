@@ -1,6 +1,8 @@
 # Privacy-preserving Medical AI Blog
 
-![](./images/banner.jpg)
+<p align="center">
+  <img src="./images/banner.jpg"/>
+</p>
 
 This repository contains the code I use in my [**technical blog**](https://encryptedlearner.com/) and [**personal website**](https://khoaduynguyen.com) which focus on private and secure medical AI applications . Following is the list of technical articles and accompanying codes:  
 1. [*Detecting Heart Abnormalities Using 1D CNN on Data You Cannot See*](https://towardsdatascience.com/detecting-heart-abnormalities-using-1d-cnn-on-data-you-cannot-see-with-pysyft-735481a952d8). [`Code`](./ecg-split-1DCNN-PySyft/)

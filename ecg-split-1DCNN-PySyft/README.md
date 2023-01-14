@@ -1,0 +1,2 @@
+# Split Learning on ECG Data using 1DCNN and PySyft
+Demonstration code for this [blog post](https://encryptedlearner.com/detecting-heart-abnormalities-using-1d-cnn-on-data-you-cannot-see-with-pysyft-735481a952d8) (published via Towards Data Science) on [Encrypted Learner](https://encryptedlearner.com/).

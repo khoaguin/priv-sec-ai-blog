@@ -1,7 +1,7 @@
 # Privacy-preserving Medical AI Blog
 
 <p align="center">
-  <img src="./images/banner.jpg"/>
+  <img src="./assets/banner.jpg"/>
 </p>
 
 This repository contains the code I use in my [**technical blog**](https://encryptedlearner.com/) and [**personal website**](https://khoaduynguyen.com) which focus on private and secure medical AI applications . Following is the list of technical articles and accompanying codes:  

@@ -1,5 +1,5 @@
 # What is Hybrid Homomorphic Encryption
-Some demonstration code in C++ based on the [Microsoft's SEAL](https://github.com/microsoft/SEAL) and [PASTA library](https://github.com/IAIK/hybrid-HE-framework) for the [hybrid homomorphic encryption blog post](https://encryptedlearner.com/what-is-hybrid-homomorphic-encryption-and-its-applications-b0568b21954c) on [Encrypted Learner](https://encryptedlearner.com/).
+Demonstration code for the blog post [what is hybrid homomorphic encryption](https://encryptedlearner.com/what-is-hybrid-homomorphic-encryption-and-its-applications-b0568b21954c).
 
 ## Requirements
 `cpp==9.4.0`   

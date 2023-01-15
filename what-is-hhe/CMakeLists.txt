@@ -29,7 +29,7 @@ add_executable(${PROJECT_NAME} ${PROJECT_SOURCE})
 
 foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
-    message(STATUS "Library included: ${LIBRARY}/${LIBRARY}")
+    message(STATUS "Library included: ${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 target_link_libraries(${PROJECT_NAME} SEAL::seal)

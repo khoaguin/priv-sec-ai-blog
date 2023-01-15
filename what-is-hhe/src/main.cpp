@@ -46,20 +46,8 @@ int main() {
     std::vector<int> gk_indices = pastahelper::add_gk_indices(use_bsgs, he_benc);
     keygen.create_galois_keys(gk_indices, client.he_gk);
 
-        // size_t params_size = get_seal_params_size(config::plain_mod, config::mod_degree, config::seclevel);
-        // KeyGenerator keygen(*context);
-        // User.he_sk = keygen.secret_key();  // HHE Decryption Secret Key
-        // keygen.create_public_key(User.he_pk);  // HHE Encryption Key
-        // keygen.create_relin_keys(User.he_rk);  // HHE RelinKey
-        // BatchEncoder user_he_benc(*context);
-        // Encryptor user_he_enc(*context, User.he_pk);
-        // Evaluator user_he_eval(*context);
-        // vector<int> gk_indices = add_gk_indices(config::use_bsgs, user_he_benc);
-        // keygen.create_galois_keys(gk_indices, User.he_gk);
-
-
-    std::cout << "The encryption algorithm (HHE.Enc)" << std::endl;
-
+    std::cout << "The client runs the encryption algorithm (HHE.Enc)" << std::endl;
+    client.k = pastahelper::get_symmetric_key();
 
     return 0;
 }

@@ -14,6 +14,7 @@ set(LIBRARY_HEADERS_DIR
 
 set(LIBRARY_HEADERS
     ${LIBRARY_HEADERS_DIR}/pasta.h
+    # ${LIBRARY_HEADERS_DIR}/pasta_3_plain.h
 )
 
 set(LIBRARY_SOURCE_DIR
@@ -22,6 +23,7 @@ set(LIBRARY_SOURCE_DIR
 
 set(LIBRARY_SOURCE
     ${LIBRARY_SOURCE_DIR}/pasta.cpp
+    # ${LIBRARY_SOURCE_DIR}/pasta_3_plain.cpp
 )
 
 project(${PROJECT_NAME})

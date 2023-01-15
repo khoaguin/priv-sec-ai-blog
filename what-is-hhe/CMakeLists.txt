@@ -9,7 +9,10 @@ set(SOURCE_DIR
 )
 
 set(PROJECT_SOURCE
-    ${SOURCE_DIR}/main.cpp
+    ${SOURCE_DIR}/main.cpp 
+    ${SOURCE_DIR}/sealhelper.cpp
+    ${SOURCE_DIR}/pastahelper.cpp
+
 )
 
 set(LIBRARIES_DIR

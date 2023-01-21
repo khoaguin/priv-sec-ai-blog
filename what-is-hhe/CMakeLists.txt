@@ -10,9 +10,10 @@ set(SOURCE_DIR
 
 set(PROJECT_SOURCE
     ${SOURCE_DIR}/main.cpp 
-    ${SOURCE_DIR}/sealhelper.cpp
-    ${SOURCE_DIR}/pastahelper.cpp
-
+    ${SOURCE_DIR}/utils/sealhelper.cpp
+    ${SOURCE_DIR}/utils/pastahelper.cpp
+    ${SOURCE_DIR}/pasta/pasta_3_plain.cpp
+    configs/config.cpp
 )
 
 set(LIBRARIES_DIR
@@ -20,11 +21,43 @@ set(LIBRARIES_DIR
 )
 
 set(LIBRARIES
-    pasta
+    keccak 
+    aes
 )
 
 project(${PROJECT_NAME})
 find_package(SEAL 4.0.0 REQUIRED)
+
+include(CheckCCompilerFlag)
+function(check_c_compiler_flag_and_add flag result)
+  check_c_compiler_flag("${flag}" ${result})
+  if(${result})
+    add_compile_options("${flag}")
+  endif()
+endfunction()
+
+# for AES code
+if(MSVC)
+  add_definitions("-DOC_ENABLE_SSE2")
+  message("-- Enabling SSE2 for AES")
+  add_definitions("-DOC_ENABLE_AESNI")
+  message("-- Enabling AES_NI")
+else()
+  check_c_compiler_flag_and_add(-msse2 CC_SUPPORTS_SSE2)
+  if(CC_SUPPORTS_SSE2)
+    add_definitions("-DOC_ENABLE_SSE2")
+    message("-- Enabling SSE2 for AES")
+  endif()
+
+  check_c_compiler_flag_and_add(-maes CC_SUPPORTS_AES)
+  if(CC_SUPPORTS_AES)
+    add_definitions("-DOC_ENABLE_AESNI")
+    message("-- Enabling AES_NI")
+  else()
+    add_definitions("-DOC_ENABLE_PORTABLE_AES")
+  endif()
+endif()
+
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCE})
 
 foreach(LIBRARY ${LIBRARIES})

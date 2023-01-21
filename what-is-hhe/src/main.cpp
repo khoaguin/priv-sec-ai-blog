@@ -2,10 +2,13 @@
 #include <vector>
 
 #include <seal/seal.h>
-#include <pasta/pasta.h>
 
-#include "sealhelper.h"
-#include "pastahelper.h"
+#include "../configs/config.h"
+#include "utils/sealhelper.h"
+#include "utils/pastahelper.h"
+#include "pasta/SEAL_Cipher.h"
+#include "pasta/pasta_3_plain.h"
+
 
 struct Client {
     // the HE keys
@@ -17,8 +20,8 @@ struct Client {
     std::vector<uint64_t> k;  // the secret symmetric keys
     // client's data
     std::vector<seal::Ciphertext> c_k;  // the HE encrypted symmetric keys
-    std::vector<int64_t> m {-2, -1, 0, 1, 2};  // the client's secret data
-    std::vector<uint64_t> c_i;  // the symmetric encrypted data
+    std::vector<uint64_t> m {0, 5, 255, 100, 255};  // the client's secret data
+    std::vector<uint64_t> c_s;  // the symmetric encrypted data
     seal::Ciphertext c_res;  // the HE encrypted result received from the server
 };
 
@@ -31,7 +34,7 @@ int main() {
 
     std::cout << "---- Client ----" << std::endl;
     Client client;
-    std::cout << "The client runs HHE.KeyGen to create the keys" << std::endl;
+    std::cout << "The client runs HHE.KeyGen to create the HE keys" << std::endl;
     std::shared_ptr<seal::SEALContext> context = sealhelper::get_seal_context();
     sealhelper::print_parameters(*context);
     seal::KeyGenerator keygen(*context);
@@ -48,6 +51,12 @@ int main() {
 
     std::cout << "The client runs the encryption algorithm (HHE.Enc)" << std::endl;
     client.k = pastahelper::get_symmetric_key();
+    pasta::PASTA SymmetricEncryptor(client.k, configs::plain_mod);
+    client.c_s = SymmetricEncryptor.encrypt(client.m);
+    // std::vector<uint64_t> c_s_dec = SymmetricEncryptor.decrypt(client.c_s);
+    // for (auto i : c_s_dec) {
+    //     std::cout << i << " ";
+    // }
 
     return 0;
 }

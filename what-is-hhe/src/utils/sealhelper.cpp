@@ -110,4 +110,24 @@ namespace sealhelper
         return {decrypted_vec.begin(), decrypted_vec.begin() + size};
     }
 
+    /*
+    Helper function: HE vector multiplication
+    */
+    seal::Ciphertext he_mult(const seal::Evaluator &eval, seal::Ciphertext x, seal::Plaintext w)
+    {
+        seal::Ciphertext result;
+        eval.multiply_plain(x, w, result);
+        return result;
+    }
+
+    /*
+    Helper function: HE vector addition
+    */
+    seal::Ciphertext he_add(const seal::Evaluator &eval, seal::Ciphertext x, seal::Plaintext b)
+    {
+        seal::Ciphertext result;
+        eval.add_plain(x, b, result);
+        return result;
+    }
+
 } // end of sealhelper namespace

@@ -18,6 +18,16 @@ namespace sealhelper
     void print_parameters(const seal::SEALContext &context);
 
     /*
+    Helper function: HE vector multiplication
+    */
+    seal::Ciphertext he_mult(const seal::Evaluator &eval, seal::Ciphertext x, seal::Plaintext w);
+
+    /*
+    Helper function: HE vector addition
+    */
+    seal::Ciphertext he_add(const seal::Evaluator &eval, seal::Ciphertext x, seal::Plaintext b);
+
+    /*
     Helper function: Decrypt a SEAL ciphertext and return the result as a vector of integers.
     */
     std::vector<int64_t> decrypt(const seal::Ciphertext &enc_input,

@@ -88,8 +88,8 @@ int main()
     seal::Plaintext plain_w, plain_b;
     he_benc.encode(server.w, plain_w);
     he_benc.encode(server.b, plain_b);
-    he_eval.multiply_plain(server.c[0], plain_w, server.c_res);
-    he_eval.add_plain(server.c_res, plain_b, client.c_res);
+    server.c_res = sealhelper::he_mult(he_eval, server.c[0], plain_w);
+    client.c_res = sealhelper::he_add(he_eval, server.c_res, plain_b);
     std::cout << "The server sends the encrypted result c_res to the client" << std::endl;
 
     std::cout << "\n---- Client ----" << std::endl;

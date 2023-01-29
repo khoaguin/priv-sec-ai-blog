@@ -11,3 +11,7 @@ Demonstration code for the blog post [what is hybrid homomorphic encryption](htt
 Here, `-DCMAKE_PREFIX_PATH` specifies the path to the installed SEAL library.
 - `cmake --build build`
 - Run the compiled binary, for example `./build/WhatIsHHE`
+
+An example output is as follows:
+
+![running](./assets/running.png)

@@ -9,6 +9,7 @@
 #include "utils/utils.h"
 #include "pasta/SEAL_Cipher.h"
 #include "pasta/pasta_3_plain.h"
+#include "pasta/pasta_3_seal.h"
 
 struct Client
 {
@@ -28,7 +29,11 @@ struct Client
 
 struct Server
 {
-    std::vector<seal::Ciphertext> c; // the HE encrypted data of Client's m
+    std::vector<int64_t> w{-1, 2, -3, 4, 5};    // dummy weights
+    std::vector<int64_t> b{-5, -5, -5, -5, -5}; // dummy biases
+    std::vector<seal::Ciphertext> c;            // the HE encrypted data of Client's m
+    seal::SecretKey he_sk;                      // the server's HE secret key
+    seal::Ciphertext c_res;                     // the HE encrypted results that will be sent to the Analyst
 };
 
 int main()
@@ -72,7 +77,18 @@ int main()
 
     std::cout << "\n---- Server ----" << std::endl;
     utils::print_line(__LINE__);
+    std::cout << "The server creates his own HE secret key" << std::endl;
+    seal::KeyGenerator csp_keygen(*context);
+    server.he_sk = csp_keygen.secret_key();
+
+    utils::print_line(__LINE__);
     std::cout << "The server performs the HHE.Decomp algorithm" << std::endl;
+    pasta::PASTA_SEAL HHE(context, client.he_pk, server.he_sk, client.he_rk, client.he_gk);
+    server.c = HHE.decomposition(client.c_s, client.c_k, configs::USE_BATCH);
+    utils::print_line(__LINE__);
+    std::cout << "The server evaluates a linear transformation on encrypted data" << std::endl;
+    // packed_enc_multiply(CSP.c_prime[0], Analyst.w_c, CSP.c_res, analyst_he_eval);
+    // packed_enc_addition(CSP.c_res, Analyst.b_c, CSP.c_res, analyst_he_eval);
 
     return 0;
 }

@@ -13,6 +13,8 @@ set(PROJECT_SOURCE
     ${SOURCE_DIR}/utils/sealhelper.cpp
     ${SOURCE_DIR}/utils/pastahelper.cpp
     ${SOURCE_DIR}/pasta/pasta_3_plain.cpp
+    ${SOURCE_DIR}/pasta/pasta_3_seal.cpp
+    ${SOURCE_DIR}/pasta/SEAL_Cipher.cpp
     configs/config.cpp
 )
 

@@ -31,9 +31,9 @@ struct Server
 {
     std::vector<int64_t> w{-1, 2, -3, 4, 5};    // dummy weights
     std::vector<int64_t> b{-5, -5, -5, -5, -5}; // dummy biases
-    std::vector<seal::Ciphertext> c;            // the HE encrypted data of Client's m
+    std::vector<seal::Ciphertext> c;            // the HE encrypted ciphertext of client's data
     seal::SecretKey he_sk;                      // the server's HE secret key
-    seal::Ciphertext c_res;                     // the HE encrypted results that will be sent to the Analyst
+    seal::Ciphertext c_res;                     // the HE encrypted results that will be sent to the client
 };
 
 int main()
@@ -77,18 +77,34 @@ int main()
 
     std::cout << "\n---- Server ----" << std::endl;
     utils::print_line(__LINE__);
-    std::cout << "The server creates his own HE secret key" << std::endl;
+    std::cout << "The server performs the HHE.Decomp algorithm" << std::endl;
     seal::KeyGenerator csp_keygen(*context);
     server.he_sk = csp_keygen.secret_key();
-
-    utils::print_line(__LINE__);
-    std::cout << "The server performs the HHE.Decomp algorithm" << std::endl;
     pasta::PASTA_SEAL HHE(context, client.he_pk, server.he_sk, client.he_rk, client.he_gk);
     server.c = HHE.decomposition(client.c_s, client.c_k, configs::USE_BATCH);
+
     utils::print_line(__LINE__);
     std::cout << "The server evaluates a linear transformation on encrypted data" << std::endl;
-    // packed_enc_multiply(CSP.c_prime[0], Analyst.w_c, CSP.c_res, analyst_he_eval);
-    // packed_enc_addition(CSP.c_res, Analyst.b_c, CSP.c_res, analyst_he_eval);
+    seal::Plaintext plain_w, plain_b;
+    he_benc.encode(server.w, plain_w);
+    he_benc.encode(server.b, plain_b);
+    he_eval.multiply_plain(server.c[0], plain_w, server.c_res);
+    he_eval.add_plain(server.c_res, plain_b, client.c_res);
+    std::cout << "The server sends the encrypted result c_res to the client" << std::endl;
+
+    std::cout << "\n---- Client ----" << std::endl;
+    utils::print_line(__LINE__);
+    std::cout << "The client decrypts the result" << std::endl;
+    std::vector<int64_t> decrypted_res = sealhelper::decrypt(client.c_res,
+                                                             client.he_sk,
+                                                             he_benc,
+                                                             *context,
+                                                             client.m.size());
+    std::cout << "The client's decrypted result is: ";
+    for (auto i : decrypted_res)
+    {
+        std::cout << i << " ";
+    }
 
     return 0;
 }

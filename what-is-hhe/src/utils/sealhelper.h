@@ -16,4 +16,13 @@ namespace sealhelper
     Helper function: Prints the parameters in a SEALContext.
     */
     void print_parameters(const seal::SEALContext &context);
+
+    /*
+    Helper function: Decrypt a SEAL ciphertext and return the result as a vector of integers.
+    */
+    std::vector<int64_t> decrypt(const seal::Ciphertext &enc_input,
+                                 const seal::SecretKey &he_sk,
+                                 const seal::BatchEncoder &benc,
+                                 const seal::SEALContext &context,
+                                 size_t size);
 }

@@ -59,6 +59,12 @@ int main()
     keygen.create_galois_keys(gk_indices, client.he_gk);
 
     utils::print_line(__LINE__);
+    std::cout << "The client's plaintext data: ";
+    for (auto i : client.m)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
     std::cout << "The client creates the symmetric key and encrypts his data" << std::endl;
     client.k = pastahelper::get_symmetric_key();
     pasta::PASTA SymmetricEncryptor(client.k, configs::plain_mod);
@@ -84,6 +90,18 @@ int main()
     server.c = HHE.decomposition(client.c_s, client.c_k, configs::USE_BATCH);
 
     utils::print_line(__LINE__);
+    std::cout << "The server's weights: ";
+    for (auto i : server.w)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
+    std::cout << "The client's decrypted result is: ";
+    for (auto i : server.b)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << "\n";
     std::cout << "The server evaluates a linear transformation on encrypted data" << std::endl;
     seal::Plaintext plain_w, plain_b;
     he_benc.encode(server.w, plain_w);

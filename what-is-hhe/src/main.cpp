@@ -96,7 +96,7 @@ int main()
         std::cout << i << " ";
     }
     std::cout << "\n";
-    std::cout << "The client's decrypted result is: ";
+    std::cout << "The server's biases: ";
     for (auto i : server.b)
     {
         std::cout << i << " ";
